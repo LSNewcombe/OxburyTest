@@ -5,9 +5,9 @@ import { CalculateHeuristic } from "./AStar"
 export function CreateGrid(BlockedNodes: boolean[][], startNode: Vector, targetNode: Vector): Node[][] {
   var grid: Node[][] = []
 
-  for (let y = 0; y < 5; y++) {
+  for (let y = 0; y < BlockedNodes.length; y++) {
     grid.push([])
-    for (let x = 0; x < 5; x++) {
+    for (let x = 0; x < BlockedNodes.length; x++) {
 
       if (y === startNode.y && x === startNode.x) {
         grid[y][x] = {

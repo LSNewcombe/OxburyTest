@@ -84,4 +84,22 @@ describe("Pathfind", () => {
 
     expect(pathfind(A, P, Q)).toBe(8)
   })
+  it("Large Grid", () => {
+    const A = [
+      [true, true, true, true, true, true, true, true, true, true],
+      [true, false, false, false, true, true, true, true, true, true],
+      [true, true, true, true, true, true, true, true, true, true],
+      [false, true, false, true, false, true, true, true, true, true],
+      [true, true, true, true, true, true, true, true, true, true],
+      [true, true, true, true, true, true, true, true, true, true],
+      [true, false, false, false, true, true, true, true, true, true],
+      [true, true, true, true, true, true, true, true, true, true],
+      [false, true, false, true, false, true, true, true, true, true],
+      [true, true, true, true, true, true, true, true, true, true],
+    ]
+    const P: Vector = { x: 2, y: 0 }
+    const Q: Vector = { x: 4, y: 9 }
+
+    expect(pathfind(A, P, Q)).toBe(16)
+  })
 })
