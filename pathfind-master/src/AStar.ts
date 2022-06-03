@@ -60,13 +60,13 @@ function GetNodeNeighours(currentNodePos: Vector, grid: Node[][]): Node[] {
   if (currentNodePos.y > 0)
     nodeNeighbours.push(grid[currentNodePos.y - 1][currentNodePos.x])
 
-  if (currentNodePos.y < nodeNeighbours.length - 1)
+  if (currentNodePos.y < grid.length - 1)
     nodeNeighbours.push(grid[currentNodePos.y + 1][currentNodePos.x])
 
   if (currentNodePos.x > 0)
     nodeNeighbours.push(grid[currentNodePos.y][currentNodePos.x - 1])
 
-  if (currentNodePos.x < nodeNeighbours.length - 1)
+  if (currentNodePos.x < grid.length - 1)
     nodeNeighbours.push(grid[currentNodePos.y][currentNodePos.x + 1])
 
   return nodeNeighbours
