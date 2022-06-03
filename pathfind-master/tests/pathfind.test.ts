@@ -100,6 +100,6 @@ describe("Pathfind", () => {
     const P: Vector = { x: 2, y: 0 }
     const Q: Vector = { x: 4, y: 9 }
 
-    expect(pathfind(A, P, Q)).toBe(16)
+    expect(pathfind(A, P, Q)).toBe(13)
   })
 })
