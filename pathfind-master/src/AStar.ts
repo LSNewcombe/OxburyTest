@@ -1,22 +1,17 @@
 import { Vector } from "./Vector.type";
 import {Node} from "./Node.type"
 
-export function CalculateHeuristic(CurrentPos: Vector, TargetPos: Vector): number {
-    return Math.abs((CurrentPos.x - TargetPos.x) + (CurrentPos.y - TargetPos.y))
-  }
-
-export function CalculateShortestPath(Grid: Node[][], P: Vector, Q:Vector): number {
-    let currentNode = Grid[P.y][P.x]
+export function CalculateShortestPath(grid: Node[][], startNode: Vector, targetNode:Vector): number {
+    let currentNode = grid[startNode.y][startNode.x]
     
     if(currentNode.globalScore === 0)
       return 0
 
-    let currentNodePos = P
     let nodesNotTested: Node[] = []
 
     nodesNotTested.push(currentNode)
 
-    while(nodesNotTested.length!= 0 && currentNodePos != Q) {
+    while(nodesNotTested.length!= 0) {
 
       //Sort untested nodes by the global goal, so lowest is first
       nodesNotTested.sort((a, b) => {
@@ -27,13 +22,68 @@ export function CalculateShortestPath(Grid: Node[][], P: Vector, Q:Vector): numb
         break
 
       currentNode = nodesNotTested[0]
-      Grid[currentNodePos.y][currentNodePos.x].visited = true
+      grid[currentNode.position.y][currentNode.position.x].visited = true
+      
+      //Get the neighbours of the current node
+      let nodeNeighbours = GetNodeNeighours(currentNode.position, grid)
+      
+      nodeNeighbours.forEach(nodeNeighbour => {
 
-      //nodesNotTested.splice(nodesNotTested.indexOf(), 1)
-      break;
+        if(nodeNeighbour.canNavigate && !nodeNeighbour.visited) {
+          let distanceToNeighbour = currentNode.localScore + CalculateHeuristic(currentNode.position, nodeNeighbour.position)
+
+          if(distanceToNeighbour < nodeNeighbour.localScore) {
+            nodeNeighbour.parent = currentNode.position
+            nodeNeighbour.localScore = distanceToNeighbour
+
+            nodeNeighbour.globalScore = nodeNeighbour.localScore + CalculateHeuristic(nodeNeighbour.position, targetNode)
+          }
+          nodesNotTested.push(nodeNeighbour)
+
+        }
+
+      })
+      
+      nodesNotTested.splice(nodesNotTested.indexOf(currentNode), 1)
+      
     }
 
-    return -1
+    return CalculateDistanceOfPath(grid, startNode, targetNode)
   }
-  
-  
+  export function CalculateHeuristic(currentPos: Vector, targetPos: Vector): number {
+    return Math.abs((currentPos.x - targetPos.x) + (currentPos.y - targetPos.y))
+  }
+
+  function GetNodeNeighours(currentNodePos: Vector, grid: Node[][]): Node[] {
+    let nodeNeighbours: Node[] = []
+      
+    if(currentNodePos.y > 0)
+      nodeNeighbours.push(grid[currentNodePos.y - 1][currentNodePos.x])
+
+    if(currentNodePos.y < 4)
+      nodeNeighbours.push(grid[currentNodePos.y + 1][currentNodePos.x])
+
+    if(currentNodePos.x > 0)
+      nodeNeighbours.push(grid[currentNodePos.y][currentNodePos.x - 1])
+
+    if(currentNodePos.x < 4)
+      nodeNeighbours.push(grid[currentNodePos.y][currentNodePos.x + 1])
+    
+    return nodeNeighbours
+  }
+
+  function CalculateDistanceOfPath(grid: Node[][], startNode: Vector, targetNode: Vector): number {
+    let currentNode = targetNode
+    let parentNode = grid[currentNode.y][currentNode.x].parent
+    let distance = 0
+
+    while(parentNode) {
+      currentNode = parentNode
+      var x = grid[currentNode.y][currentNode.x]
+      parentNode = grid[currentNode.y][currentNode.x].parent
+
+      distance++
+    }
+
+    return distance
+  }

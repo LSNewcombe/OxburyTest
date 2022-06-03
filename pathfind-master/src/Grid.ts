@@ -2,20 +2,21 @@ import { Vector } from "./Vector.type"
 import {Node} from "./Node.type"
 import { CalculateHeuristic } from "./AStar"
 
-export function CreateGrid(BlockedNodes: boolean[][], P: Vector, Q: Vector): Node[][] {
+export function CreateGrid(BlockedNodes: boolean[][], startNode: Vector, targetNode: Vector): Node[][] {
     var grid: Node[][] = []
-  
-  
+   
     for(let y = 0; y < 5; y++) {
       grid.push([])
       for(let x = 0; x < 5; x++) {
   
-        if(y === P.y && x === P.x) {
+        if(y === startNode.y && x === startNode.x) {
           grid[y][x] = {
             canNavigate: CanNavigateNode(BlockedNodes, y, x),
             localScore: 0,
-            globalScore: CalculateHeuristic(P, Q),
-            visited: false
+            globalScore: CalculateHeuristic(startNode, targetNode),
+            visited: false,
+            position: {x, y},
+            parent: null
           }
   
         }
@@ -24,7 +25,9 @@ export function CreateGrid(BlockedNodes: boolean[][], P: Vector, Q: Vector): Nod
             canNavigate: CanNavigateNode(BlockedNodes, y, x),
             localScore: Infinity,
             globalScore: Infinity,
-            visited: false
+            visited: false,
+            position: {x, y},
+            parent: null
           }
         }   
       }
