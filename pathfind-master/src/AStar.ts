@@ -2,41 +2,49 @@ import { Vector } from "./Vector.type";
 import { Node } from "./Node.type"
 
 export function CalculateShortestPath(grid: Node[][], startNode: Vector, targetNode: Vector): number {
-  let currentNode = grid[startNode.y][startNode.x]
+  let currentNode = grid[startNode.Y][startNode.X]
 
-  if (currentNode.globalScore === 0)
+  if (currentNode.GlobalScore === 0)
     return 0
 
   let nodesNotTested: Node[] = []
 
   nodesNotTested.push(currentNode)
 
-  while (nodesNotTested.length != 0) {
+  //If we have reached the target node then the loop ends as the shortest path has been found and we no longer need to test the remaining nodes
+  while (nodesNotTested.length != 0 && currentNode.Position.X != targetNode.X || currentNode.Position.Y != targetNode.Y) {
 
     //Sort untested nodes by the global goal, so lowest is first
     nodesNotTested.sort((a, b) => {
-      return a.globalScore - b.globalScore
+      return a.GlobalScore - b.GlobalScore
     })
 
     if (nodesNotTested.length === 0)
       break
 
     currentNode = nodesNotTested[0]
-    grid[currentNode.position.y][currentNode.position.x].visited = true
+    //Only test a node once
+    grid[currentNode.Position.Y][currentNode.Position.X].Visited = true
 
     //Get the neighbours of the current node
-    let nodeNeighbours = GetNodeNeighours(currentNode.position, grid)
+    let nodeNeighbours = GetNodeNeighours(currentNode.Position, grid)
 
     nodeNeighbours.forEach(nodeNeighbour => {
 
-      if (nodeNeighbour.canNavigate && !nodeNeighbour.visited) {
-        let distanceToNeighbour = currentNode.localScore + CalculateHeuristic(currentNode.position, nodeNeighbour.position)
+      if (nodeNeighbour.CanNavigate && !nodeNeighbour.Visited) {
+        //Calculate the distance to the neighbour
+        let distanceToNeighbour = currentNode.LocalScore + CalculateHeuristic(currentNode.Position, nodeNeighbour.Position)
 
-        if (distanceToNeighbour < nodeNeighbour.localScore) {
-          nodeNeighbour.parent = currentNode.position
-          nodeNeighbour.localScore = distanceToNeighbour
+        //If the distance is lower than the current local score of the neighbour then we have found a shorter path to this node
+        if (distanceToNeighbour < nodeNeighbour.LocalScore) {
+          //Update the parent of the neighbour to be the current node we are testing
+          nodeNeighbour.Parent = currentNode.Position
 
-          nodeNeighbour.globalScore = nodeNeighbour.localScore + CalculateHeuristic(nodeNeighbour.position, targetNode)
+          //Update the neighbours local score with the lower distance
+          nodeNeighbour.LocalScore = distanceToNeighbour
+
+          //Update the neighbours global score with the distance of the neighbour to the target
+          nodeNeighbour.GlobalScore = nodeNeighbour.LocalScore + CalculateHeuristic(nodeNeighbour.Position, targetNode)
         }
         nodesNotTested.push(nodeNeighbour)
 
@@ -50,36 +58,39 @@ export function CalculateShortestPath(grid: Node[][], startNode: Vector, targetN
 
   return CalculateDistanceOfPath(grid, targetNode)
 }
+
 export function CalculateHeuristic(currentPos: Vector, targetPos: Vector): number {
-  return Math.abs((currentPos.x - targetPos.x) + (currentPos.y - targetPos.y))
+  return Math.abs((currentPos.X - targetPos.X) + (currentPos.Y - targetPos.Y))
 }
 
 function GetNodeNeighours(currentNodePos: Vector, grid: Node[][]): Node[] {
   let nodeNeighbours: Node[] = []
 
-  if (currentNodePos.y > 0)
-    nodeNeighbours.push(grid[currentNodePos.y - 1][currentNodePos.x])
+  if (currentNodePos.Y > 0)
+    nodeNeighbours.push(grid[currentNodePos.Y - 1][currentNodePos.X])
 
-  if (currentNodePos.y < grid.length - 1)
-    nodeNeighbours.push(grid[currentNodePos.y + 1][currentNodePos.x])
+  if (currentNodePos.Y < grid.length - 1)
+    nodeNeighbours.push(grid[currentNodePos.Y + 1][currentNodePos.X])
 
-  if (currentNodePos.x > 0)
-    nodeNeighbours.push(grid[currentNodePos.y][currentNodePos.x - 1])
+  if (currentNodePos.X > 0)
+    nodeNeighbours.push(grid[currentNodePos.Y][currentNodePos.X - 1])
 
-  if (currentNodePos.x < grid.length - 1)
-    nodeNeighbours.push(grid[currentNodePos.y][currentNodePos.x + 1])
+  if (currentNodePos.X < grid.length - 1)
+    nodeNeighbours.push(grid[currentNodePos.Y][currentNodePos.X + 1])
 
   return nodeNeighbours
 }
 
 function CalculateDistanceOfPath(grid: Node[][], targetNode: Vector): number {
   let currentNode = targetNode
-  let parentNode = grid[currentNode.y][currentNode.x].parent
+  let parentNode = grid[currentNode.Y][currentNode.X].Parent
   let distance = 0
 
+  //While there is a parent node we work backwards from the target node to the starting node and increment the total distance taken.
+  //As the starting node has no parent node it will always be null
   while (parentNode) {
     currentNode = parentNode
-    parentNode = grid[currentNode.y][currentNode.x].parent
+    parentNode = grid[currentNode.Y][currentNode.X].Parent
 
     distance++
   }

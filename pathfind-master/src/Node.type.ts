@@ -1,10 +1,10 @@
 import { Vector } from "./Vector.type"
 
 export type Node = {
-    localScore: number
-    globalScore: number
-    canNavigate: boolean
-    visited: boolean
-    position: Vector
-    parent: Vector
+    LocalScore: number
+    GlobalScore: number
+    CanNavigate: boolean
+    Visited: boolean
+    Position: Vector
+    Parent: Vector
 }

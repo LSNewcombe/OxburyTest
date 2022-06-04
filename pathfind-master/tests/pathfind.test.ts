@@ -10,8 +10,8 @@ describe("Pathfind", () => {
       [true, true, true, true, true],
       [true, true, true, true, true],
     ]
-    const P: Vector = { x: 0, y: 0 }
-    const Q: Vector = { x: 0, y: 0 }
+    const P: Vector = { X: 0, Y: 0 }
+    const Q: Vector = { X: 0, Y: 0 }
 
     expect(pathfind(A, P, Q)).toBe(0)
   })
@@ -24,8 +24,8 @@ describe("Pathfind", () => {
       [true, true, true, true, true],
       [true, true, true, true, true],
     ]
-    const P: Vector = { x: 1, y: 0 }
-    const Q: Vector = { x: 2, y: 3 }
+    const P: Vector = { X: 1, Y: 0 }
+    const Q: Vector = { X: 2, Y: 3 }
 
     expect(pathfind(A, P, Q)).toBe(6)
   })
@@ -38,8 +38,8 @@ describe("Pathfind", () => {
       [true, true, true, true, true],
       [true, true, true, true, true],
     ]
-    const P: Vector = { x: 0, y: 0 }
-    const Q: Vector = { x: 0, y: 4 }
+    const P: Vector = { X: 0, Y: 0 }
+    const Q: Vector = { X: 0, Y: 4 }
 
     expect(pathfind(A, P, Q)).toBe(4)
   })
@@ -52,8 +52,8 @@ describe("Pathfind", () => {
       [true, true, false, false, true],
       [true, true, true, true, true],
     ]
-    const P: Vector = { x: 0, y: 0 }
-    const Q: Vector = { x: 3, y: 4 }
+    const P: Vector = { X: 0, Y: 0 }
+    const Q: Vector = { X: 3, Y: 4 }
 
     expect(pathfind(A, P, Q)).toBe(9)
   })
@@ -66,8 +66,8 @@ describe("Pathfind", () => {
       [true, false, false, false, true],
       [true, true, true, true, true],
     ]
-    const P: Vector = { x: 0, y: 0 }
-    const Q: Vector = { x: 4, y: 4 }
+    const P: Vector = { X: 0, Y: 0 }
+    const Q: Vector = { X: 4, Y: 4 }
 
     expect(pathfind(A, P, Q)).toBe(8)
   })
@@ -79,8 +79,8 @@ describe("Pathfind", () => {
       [false, true, false, true, false],
       [true, true, true, true, true],
     ]
-    const P: Vector = { x: 2, y: 0 }
-    const Q: Vector = { x: 4, y: 4 }
+    const P: Vector = { X: 2, Y: 0 }
+    const Q: Vector = { X: 4, Y: 4 }
 
     expect(pathfind(A, P, Q)).toBe(8)
   })
@@ -97,8 +97,8 @@ describe("Pathfind", () => {
       [false, true, false, true, false, true, true, true, true, true],
       [true, true, true, true, true, true, true, true, true, true],
     ]
-    const P: Vector = { x: 2, y: 0 }
-    const Q: Vector = { x: 4, y: 9 }
+    const P: Vector = { X: 2, Y: 0 }
+    const Q: Vector = { X: 4, Y: 9 }
 
     expect(pathfind(A, P, Q)).toBe(13)
   })

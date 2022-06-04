@@ -9,25 +9,25 @@ export function CreateGrid(BlockedNodes: boolean[][], startNode: Vector, targetN
     grid.push([])
     for (let x = 0; x < BlockedNodes.length; x++) {
 
-      if (y === startNode.y && x === startNode.x) {
+      if (y === startNode.Y && x === startNode.X) {
         grid[y][x] = {
-          canNavigate: CanNavigateNode(BlockedNodes, y, x),
-          localScore: 0,
-          globalScore: CalculateHeuristic(startNode, targetNode),
-          visited: false,
-          position: { x, y },
-          parent: null
+          CanNavigate: CanNavigateNode(BlockedNodes, y, x),
+          LocalScore: 0,
+          GlobalScore: CalculateHeuristic(startNode, targetNode),
+          Visited: false,
+          Position: { X: x, Y: y },
+          Parent: null
         }
 
       }
       else {
         grid[y][x] = {
-          canNavigate: CanNavigateNode(BlockedNodes, y, x),
-          localScore: Infinity,
-          globalScore: Infinity,
-          visited: false,
-          position: { x, y },
-          parent: null
+          CanNavigate: CanNavigateNode(BlockedNodes, y, x),
+          LocalScore: Infinity,
+          GlobalScore: Infinity,
+          Visited: false,
+          Position: { X: x, Y: y },
+          Parent: null
         }
       }
     }
