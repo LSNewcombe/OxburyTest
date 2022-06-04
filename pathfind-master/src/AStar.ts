@@ -14,13 +14,13 @@ export function CalculateShortestPath(grid: Node[][], startNode: Vector, targetN
   //If we have reached the target node then the loop ends as the shortest path has been found and we no longer need to test the remaining nodes
   while (nodesNotTested.length != 0 && currentNode.Position.X != targetNode.X || currentNode.Position.Y != targetNode.Y) {
 
+    if (nodesNotTested.length === 0)
+      break
+
     //Sort untested nodes by the global goal, so lowest is first
     nodesNotTested.sort((a, b) => {
       return a.GlobalScore - b.GlobalScore
     })
-
-    if (nodesNotTested.length === 0)
-      break
 
     currentNode = nodesNotTested[0]
     //Only test a node once
