@@ -44,7 +44,7 @@ describe("Pathfind", () => {
     expect(pathfind(A, P, Q)).toBe(4)
   })
 
-  it("Line", () => {
+  it("Test 4", () => {
     const A = [
       [true, true, true, true, true],
       [false, false, true, false, true],
@@ -58,7 +58,7 @@ describe("Pathfind", () => {
     expect(pathfind(A, P, Q)).toBe(9)
   })
 
-  it("Line", () => {
+  it("Test 5", () => {
     const A = [
       [true, true, true, true, true],
       [false, false, true, false, true],
@@ -71,7 +71,7 @@ describe("Pathfind", () => {
 
     expect(pathfind(A, P, Q)).toBe(8)
   })
-  it("Work for it", () => {
+  it("Test 6", () => {
     const A = [
       [true, true, true, true, true],
       [true, false, false, false, true],
@@ -101,5 +101,23 @@ describe("Pathfind", () => {
     const Q: Vector = { X: 4, Y: 9 }
 
     expect(pathfind(A, P, Q)).toBe(13)
+  })
+  it("Large Grid 2", () => {
+    const A = [
+      [true, true, true, true, true, true, true, true, true, true],
+      [true, false, false, false, true, true, false, true, true, true],
+      [true, true, true, true, true, false, false, true, true, true],
+      [false, true, false, true, false, true, true, true, true, true],
+      [true, true, true, true, false, true, false, false, false, false],
+      [true, true, true, true, true, false, true, true, true, true],
+      [true, false, false, false, true, true, true, true, true, true],
+      [true, true, true, true, true, true, true, true, true, true],
+      [false, true, false, true, false, true, true, true, true, true],
+      [true, true, true, true, true, true, true, true, true, true],
+    ]
+    const P: Vector = { X: 5, Y: 4 }
+    const Q: Vector = { X: 9, Y: 9 }
+
+    expect(pathfind(A, P, Q)).toBe(25)
   })
 })
