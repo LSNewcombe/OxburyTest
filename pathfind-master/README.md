@@ -33,5 +33,7 @@ Tests have been implemented using Jest and can be run by running `yarn test`.
 Please fill in the sections below after you complete the challenge.
 
 ### What I'm Pleased With
+The large grid test found a shorter path than what I thought it was initially
 
 ### What I Would Have Done With More Time
+Look at checking the diagonal nodes as part of the solution

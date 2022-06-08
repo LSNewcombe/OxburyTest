@@ -4,6 +4,15 @@ import { CalculateHeuristic } from "./AStar"
 
 export function CreateGrid(BlockedNodes: boolean[][], startNode: Vector, targetNode: Vector): Node[][] {
   var grid: Node[][] = []
+  
+  if(startNode.X < 0 || startNode.Y < 0)
+    throw new Error("Starting node should be 0 or higher")
+  
+  if(targetNode.X < 0 || targetNode.Y < 0)
+    throw new Error("Target node should be 0 or higher")
+
+  if(BlockedNodes.length === 0|| BlockedNodes[startNode.Y].length === 0)
+    throw new Error("Array cannot be empty")
 
   for (let y = 0; y < BlockedNodes.length; y++) {
     grid.push([])
